@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie World</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #83074d;
+        }
+
+        h1{
+            text-align: center;
+            color: #afe3ff;
+            font-family: 'Cooper Black';
+        }
+
+        .movies-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .movie {
+            background-color: #9f0a5f;
+            border: 1px solid #7d094a;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            display: flex;
+            width: 600px;
+            color: #ddd;
+        }
+        .movie h2 {
+            margin-top: 0;
+            color: #fff;
+        }
+        .movie a {
+            color: #afe3ff;
+            text-decoration: none;
+        }
+        .movie a:hover {
+            text-decoration: underline;
+        }
+        .title{
+            color: #fff;
+        }
+
+        .poster img {
+            max-width: 214px;
+            height: 321.3px;
+            margin-left: 20px;
+        }
+        .load-more {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #58c5ff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .pagination button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #58c5ff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .pagination button:disabled {
+            background-color: #909090;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>Movie World</h1>
+    <div class="movies-container">
+        {% for movie in movies %}
+            <div class="movie">
+                <div class="details">
+                    <h2>{{ movie.title }}</h2>
+                    <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+                    <p><strong>Run Time:</strong> {{ movie.run_time }}</p>
+                    <p><strong>Description:</strong> {{ movie.description }}</p>
+                    <p><a href="{{ movie.link }}" target="_blank">More details</a></p>
+                </div>
+                <div class="poster">
+                    <img src="{{ movie.poster_url }}" alt="Poster for {{ movie.title }}">
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        <form action="/" method="get">
+            <input type="hidden" name="page" value="{{ page - 1 }}">
+            <button type="submit" {% if page == 1 %}disabled{% endif %}>Previous</button>
+        </form>
+        <form action="/" method="get">
+            <input type="hidden" name="page" value="{{ page + 1 }}">
+            <button type="submit">Next</button>
+        </form>
+    </div>
+</body>
+</html>
